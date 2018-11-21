@@ -19,8 +19,9 @@ function enviar() {
     let nome = document.getElementById('nomeInput');
     let email = document.getElementById('emailInput');
     let mensagem = document.getElementById('mensagemInput');
+    let telefone = document.getElementById('telefoneInput');
     console.log(nome, email, mensagem.value.length);
-    if (nome.value.length < 8 || email.value.length < 10 || mensagem.value.length < 15) {
+    if (nome.value.length < 8 || mensagem.value.length < 15) {
         alert('Preencha as informações corretamente');
         button.disabled = false;
         button.firstChild.data = 'Enviar';
@@ -29,13 +30,17 @@ function enviar() {
         firebase.database().ref('mensagens').push({
             nome: nome.value,
             email: email.value,
-            mensagem: mensagem.value
+            mensagem: mensagem.value,
+            telefone: telefone.value,
+            liad: false,
+            timestamp: new Date().getTime()
         }).then(_ => {
             button.disabled = false;
             button.firstChild.data = 'Enviar';
             nome.value = ''
             mensagem.value = ''
             email.value = ''
+            telefone.value = ''
             alert('Mensagem enviada. Entraremos em contato em breve.')
         });
     }
